@@ -1,0 +1,355 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+    --accent-green: #29B962;
+    --accent-yellow: #fff34e;
+    --accent-blue: #2AAAF3;
+    --accent-hover-blue: #1aa0ee;
+    --accent-blue-shadow: 0 0 15px 5px rgba(55, 170, 245, .35);
+    --accent-blue-button-shadow: 0 0 15px 3px rgba(55, 170, 245, .35);
+}
+
+/* --------- Event Block --------- */
+
+.event-block {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+}
+
+.event-block .event-content {
+    background: var(--accent-blue);
+    color: white;
+    width: 410px;
+    border-radius: 30px;
+    box-shadow: var(--accent-blue-shadow);
+    padding: 30px 38px;
+    margin: 30px 0;
+    margin-right: 30px;
+}
+
+.event-block .event-content p {
+    display: none;
+}
+
+.event-block.swap .event-content {
+    background: var(--accent-yellow);
+    color: #000;
+    box-shadow: 0 0 15px 3px rgba(0, 0, 0, .1);
+}
+
+.event-block.swap .event-content p {
+    display: none;
+}
+
+.event-block .event-content .label {
+    font-size: 27px;
+    font-weight: 400;
+    margin-bottom: 28px;
+}
+
+.event-block .event-content .content {
+    justify-content: space-between;
+    display: flex;
+}
+
+.event-block .event-content .content .room {
+    font-size: 32px;
+    font-weight: 700;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.event-block .event-content .content .time {
+    font-weight: 100;
+    font-size: 44px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.event-block .controls-container {
+    transition: opacity .2s;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.event-block:hover .controls-container {
+    opacity: 1;
+}
+
+.event-block .controls-container .controls {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, .05);
+    border-radius: 27px;
+}
+
+.event-block.swap .controls-container .controls {
+    background: black;
+}
+
+.event-block .controls-container .controls .button {
+    padding: 15px;
+    border-radius: 27px;
+    cursor: pointer;
+}
+
+.event-block .controls-container .controls .button img {
+    width: 25px;
+}
+
+.event-block .controls-container .controls .button:hover {
+    background: rgba(0, 0, 0, .05);
+}
+
+.event-block.swap .controls-container .controls .button:hover {
+    background: rgba(255, 255, 255, .25);
+}
+
+/* --------- Event Block --------- */
+
+/* --------- Basic Button --------- */
+.basic-button {
+    max-height: 55.5px;
+    padding: 15px 20px;
+    color: #fff;
+    margin: 20px;
+    background: var(--accent-blue);
+    display: flex;
+    justify-content: space-between;
+    border-radius: 30px;
+    width: fit-content;
+    cursor: pointer;
+    box-shadow: var(--accent-blue-button-shadow);
+    transition: transform .2s;
+}
+
+.basic-button.white {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0 15px 3px rgba(0, 0, 0, .1);
+}
+
+.basic-button.white:hover {
+    background: #fff;
+}
+
+.basic-button:hover {
+    transform: scale(1.05);
+    background: var(--accent-hover-blue);
+}
+
+.basic-button .label {
+    font-size: 17px;
+    font-weight: 900;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.basic-button img {
+    height: 25px;
+    margin-right: 15px;
+}
+
+.basic-button.no-img img {
+    display: none;
+}
+/* --------- Basic Button --------- */
+
+/* --------- Label - Text --------- */
+.label-text {
+    width: fit-content;
+    max-width: 300px;
+    font-weight: 800;
+}
+
+.label-text .label {
+    font-size: 1em;
+    color: #787878;
+}
+
+.label-text .content {
+    font-size: 2em;
+    color: black;
+}
+/* --------- Label - Text --------- */
+
+/* --------- Avatar Block --------- */
+.avatar-block {
+    width: fit-content;
+}
+
+.avatar-block img{
+    height: 140px;
+    border-radius: 70px;
+}
+
+.avatar-block .score {
+    font-weight: 900;
+    color: #fff;
+    padding: 5px 20px;
+    font-size: 17px;
+    background: var(--accent-green);
+    width: fit-content;
+    margin: 10px auto;
+    border-radius: 20px;
+}
+/* --------- Avatar Block --------- */
+
+/* --------- Prof Label Block --------- */
+.prof-label-block {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+}
+
+.prof-label-block .event-content1{
+    color: #787878;
+    height: 21px;
+    left: 350px;
+    top: 222px;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 21px;
+}
+
+.prof-label-block .event-content2{
+    color: black;
+     
+    height: 42px;
+    left: 350px;
+    top: 244px;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 42px; 
+}
+/* --------- Prof Label Block --------- */
+
+/* --------- Dropdown Menu Block --------- */
+.dropbtn {
+    background-color: #2AAAF3;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color: #656EC3;}
+/* --------- Dropdown Menu Block --------- */
+
+
+/* --------- Event Block --------- */
+.schedule {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    min-width: 1250px;
+}
+
+.schedule .event-content {
+    background: var(--accent-blue);
+    color: white;
+    width: 150px;
+    border-radius: 10px;
+    box-shadow: var(--accent-blue-shadow);
+    padding: 15px 15px;
+    margin: 2px;
+}
+
+.schedule .event-content .label {
+    font-size: 10px;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+.schedule .event-content .content {
+    justify-content: space-between;
+    display: flex;
+}
+
+.schedule .event-content .content .room {
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.schedule .event-content .content .time {
+    font-weight: 500;
+    font-size: 15px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.schedule .controls-container {
+    transition: opacity .2s;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.schedule:hover .controls-container {
+    opacity: 1;
+}
+
+.schedule .controls-container .controls {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, .05);
+    border-radius: 27px;
+}
+
+.schedule .controls-container .controls .button {
+    padding: 0px;
+    border-radius: 0px;
+    cursor: pointer;
+}
+
+.schedule .controls-container .controls .button img {
+    height: 0px;
+}
+
+.schedule .controls-container .controls .button:hover {
+    background: rgba(0, 0, 0, .05);
+}
+/* --------- Event Block --------- */
+

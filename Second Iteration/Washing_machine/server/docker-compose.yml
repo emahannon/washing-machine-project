@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=wm_si1_data
+    volumes:
+      - postgres_wm_data:/var/lib/postgresql/data
+      - ./sqls/data.sql:/docker-entrypoint-initdb.d/2-data.sql
+      - ./sqls/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+volumes:
+  postgres_wm_data:
+    external: true

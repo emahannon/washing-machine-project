@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../assets/scripts/jquery-3.6.0.min.js"></script>
+    <title>Student</title>
+    <link rel="stylesheet" href="../assets/styles/style.css">
+    <script src="../assets/scripts/component.js"></script>
+    <link rel="import" href="../assets/components/event-block.html" id="event-block">
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    (async () => {
+        let eventBlock = await Component.build("../assets/components/event-block.html")
+
+        eventStrings = ['Upcoming reservation', 'WM102', '17:00']
+
+        eventBlock.generateNode(eventStrings, '1')
+        eventBlock.append('1', 'root')
+        eventBlock.generateNode(['Swap request', 'WM202', '18:00'], '2')
+        eventBlock.append('2', 'root')
+
+        let basicButton = await Component.build("../assets/components/basic-button.html")
+
+        buttonStrings = ['../assets/img/calendar-2.png', 'View Schedule'];
+        basicButton.generateNode(buttonStrings, 'button-1')
+        basicButton.append('button-1', 'root')
+        buttonStrings = ['../assets/img/history.png', 'History'];
+        basicButton.generateNode(buttonStrings, 'button-2', 'white')
+        basicButton.append('button-2', 'root')
+    })()
+
+
+</script>
+
+</html>

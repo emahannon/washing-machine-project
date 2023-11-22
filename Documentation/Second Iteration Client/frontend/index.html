@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+	<link rel="stylesheet" href="assets/styles/style.css">
+	<script src="assets/scripts/component.js"></script>
+	<link rel="icon" type="image/x-icon" href="assets\favicon_package\favicon.ico">
+	<style>
+		.container {
+			display: flex;
+			width: 100vw;
+			height: 100vh;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1 style="margin: 30px;">Choose User</h1>
+		<div id="button-container" style="display: flex;"></div>	
+		<div id="button-container-2" style="display: flex;"></div>	
+
+	</div>
+</body>
+<script>
+	(async () => {
+		let basicButton = await Component.build("assets/components/basic-button.html");
+
+		let buttonStrings = ['', 'Student 1'];
+		basicButton.generateNode(buttonStrings, 'student-1', 'white.no-img');
+		basicButton.append('student-1', 'button-container');
+
+		buttonStrings = ['', 'Student 2'];
+		basicButton.generateNode(buttonStrings, 'student-2', 'white.no-img');
+		basicButton.append('student-2', 'button-container');
+
+		buttonStrings = ['', 'Receptionist'];
+		basicButton.generateNode(buttonStrings, 'receptionist', 'white.no-img');
+		basicButton.append('receptionist', 'button-container-2');
+
+
+		// buttonStrings = ['', 'Student 3'];
+		// basicButton.generateNode(buttonStrings, 'student-3', 'white.no-img');
+		// basicButton.append('student-3', 'button-container');
+
+		document.getElementById('student-1').onclick = () => {
+			document.location.href = "view/student/index.html?student_id=1";
+		}
+
+		document.getElementById('student-2').onclick = () => {
+			document.location.href = "view/student/index.html?student_id=2";
+		}
+
+		document.getElementById('receptionist').onclick = () => {
+			document.location.href = "view/receptionist/";
+		}
+
+		// document.getElementById('student-3').onclick = () => {
+		// 	document.location.href = "view/student/index.html?student_id=3";
+		// }
+	})()
+</script>
+
+</html>

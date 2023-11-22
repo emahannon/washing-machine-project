@@ -1,0 +1,8 @@
+{
+    "reservation_id": 1,
+    "student_id": 1, 
+    "created_date": "date",
+    "service": "washing machine",
+    "room": "room number",
+    "date_and_time": "12:00"
+}

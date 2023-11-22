@@ -1,0 +1,3 @@
+class wm {
+    constructor(wi)
+}

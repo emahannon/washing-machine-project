@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../assets/styles/reset.css">
+    <link rel="stylesheet" href="../../assets/styles/style.css">
+    <link rel="stylesheet" href="../../assets/styles/student-main-view.css">
+    <script src="../../assets/scripts/component.js"></script>
+    <title>Main View</title>
+</head>
+
+<body>
+    <img src="../../assets/img/lev.svg" class="lev">
+    <div class="root">
+        <header id="header">
+            <h1 id="header-h1">
+                <div class="h1-text">Your Profile</div>
+            </h1>
+        </header>
+
+        <div class="details-grid" id="grid">
+            <div id="avatar-container"></div>
+        </div>
+
+        <div class="events-container" id="events-container">
+            <h2>Events</h2>
+            <div class="events-grid" id="events-grid"></div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    let params = {};
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+
+    window.location.search.slice(1).split('&').forEach(elm => {
+        if (elm === '') return;
+        let spl = elm.split('=');
+        const d = decodeURIComponent;
+        params[d(spl[0])] = (spl.length >= 2 ? d(spl[1]) : true);
+    });
+    if (params['student_id'] == undefined)
+        document.location.href = 'http://localhost:8000'
+    //alert(params['student_id'])
+
+    fetch("http://localhost:8080/student/" + params['student_id'], { mode: "cors" })
+        .then(response => {
+            // indicates whether the response is successful (status code 200-299) or not
+            if (!response.ok) {
+                throw new Error(`Request failed with status ${response.status}`)
+            }
+            return response.json()
+        })
+        .then(data => {
+            (async () => {
+                Date.prototype.addHours = function (h) {
+                    this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+                    return this;
+                }
+
+                console.log(data)
+
+                let basicButton = await Component.build("../../assets/components/basic-button.html");
+
+                let buttonStrings = ['../../assets/img/history.png', 'History'];
+                basicButton.generateNode(buttonStrings, 'history-button', 'white');
+
+                buttonStrings = ['', 'Log out'];
+                basicButton.generateNode(buttonStrings, 'logout-button', 'white.no-img');
+                basicButton.append('history-button', 'header-h1');
+                basicButton.append('logout-button', 'header');
+                document.getElementById('logout-button').onclick = () => {
+                    document.location.href = 'http://localhost:8000'
+                }
+
+                let avatarBlock = await Component.build("../../assets/components/avatar-block.html");
+
+                let avatarStrings = ['../../assets/img/albert-dera-ILip77SbmOE-unsplash.jpg', data.peneltyPoints]
+                avatarBlock.generateNode(avatarStrings, 'avatar-block')
+                avatarBlock.append('avatar-block', 'avatar-container')
+
+                let labelText = await Component.build("../../assets/components/label-text.html");
+
+                let textStrings = ['Name / Surname', data.firstName + ' ' + data.lastName];
+                labelText.generateNode(textStrings, 'name-text');
+                textStrings = ['Room number', data.roomNumber];
+                labelText.generateNode(textStrings, 'room-text');
+                textStrings = ['Dormitory', data.nameBuilding];
+                labelText.generateNode(textStrings, 'dormitory-text');
+                buttonStrings = ['../../assets/img/calendar-2.png', 'View Schedule'];
+                basicButton.generateNode(buttonStrings, 'schedule-button');
+
+                labelText.append('name-text', 'grid')
+                labelText.append('room-text', 'grid')
+                labelText.append('dormitory-text', 'grid')
+                basicButton.append('schedule-button', 'grid')
+
+                let eventBlock = await Component.build("../../assets/components/event-block.html")
+
+                let swapResponse = await fetch("http://localhost:8080/swap/to/" + params['student_id'], { mode: "cors" })
+
+                if (!swapResponse.ok) {
+                    throw new Error(`Swap Request failed with status ${response.status}`)
+                }
+
+                let swapData = await swapResponse.json()
+                console.log(swapData)
+
+                if (swapData.length != 0) {
+                    document.getElementById('events-container').style.opacity = 1;
+                    let swapTime = new Date(swapData[0].startTime)
+                    params['reservation_id'] = swapData[0].res_id
+                    params['swap_req_id'] = swapData[0].swap_id
+
+                    eventStrings = ['Swap request', 'I need it!!', 'WM1', dayNames[swapTime.getDay()] + ' ' + swapTime.getHours() + ":00", '../../assets/img/confirm-2.png', '../../assets/img/close-2.png']
+                    eventBlock.generateNode(eventStrings, '1', 'swap')
+                    eventBlock.append('1', 'events-grid')
+
+                    document.getElementById('button1').onclick = () => {
+                        // alert('hi')
+                        fetch('http://localhost:8080/swap/approve/' + params['reservation_id'] + '/' + params['swap_req_id'], {
+                            mode: 'cors',
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: '{}'
+
+                        }).then(response => {
+                            console.log(response)
+                            location.reload()
+                        })
+                        
+                    }
+
+                    document.getElementById('button2').onclick = () => {
+                        fetch('http://localhost:8080/swap/' + params['reservation_id'] + '/' + params['swap_req_id'], { method: 'DELETE' })
+                            .then(() => location.reload());
+                    }
+                }
+
+
+                document.getElementById('schedule-button').onclick = () => {
+                    document.location.href = './calendar.html?student_id=' + params['student_id']
+                }
+
+
+            })()
+        })
+
+</script>
+
+</html>

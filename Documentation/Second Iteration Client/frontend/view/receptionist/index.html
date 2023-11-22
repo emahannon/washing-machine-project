@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptionist - Schedule</title>
+    <script src="../../assets/scripts/component.js"></script>
+    <link rel="stylesheet" href="../../assets/styles/style.css">
+    <link rel="stylesheet" href="../../assets/styles/calendar.css">
+    <style>
+        /* Style The Dropdown Button */
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            z-index: 999;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #f1f1f1
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Change the background color of the dropdown button when the dropdown content is shown */
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        .overlay {
+            position: fixed;
+            z-index: 9999;
+            height: 100vh;
+            width: 100vw;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.35);
+            /* display: grid; */
+            display: none;
+        }
+
+        .overlay.visible {
+            display: grid;
+        }
+
+        .overlay-content {
+            background: #fff;
+            width: 50vw;
+            min-width: 400px;
+            /* height: 50vh; */
+            place-self: center;
+            border-radius: 7px;
+            box-shadow: 0 0 20px 15px rgba(0, 0, 0, .06);
+        }
+
+        .overlay h1 {
+            margin: 3vw;
+            margin-bottom: 4vw;
+        }
+
+        .overlay .basic-button {
+            margin: 3vw;
+            float: right;
+        }
+
+        .overlay .basic-button.white {
+            margin: 0;
+        }
+
+        .keys-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 0 3vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay" id="overlay">
+        <div class="overlay-content" id="overlay-content">
+            <h1>Choose key</h1>
+            <div class="keys-container" id="keys-container" style="display: flex;"></div>
+        </div>
+    </div>
+
+    <div class="top-menu">
+        <div class="dropdown">
+            <button class="dropbtn">Choose WM</button>
+            <div class="dropdown-content">
+                <a id="wm-1">WM 1</a>
+                <a id="wm-2">WM 2</a>
+                <a id="wm-3">WM 3</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="title" id="title"></div>
+        <div class="days">
+            <div class="filler"></div>
+            <div class="filler"></div>
+            <div class="day current" id="day-1"></div>
+            <div class="day" id="day-2"></div>
+            <div class="day" id="day-3"></div>
+            <div class="day" id="day-4"></div>
+            <div class="day" id="day-5"></div>
+        </div>
+        <div class="content" id="calendar-content">
+            <div class="time" style="grid-row:1">08:00</div>
+            <div class="time" style="grid-row:2">09:00</div>
+            <div class="time" style="grid-row:3">10:00</div>
+            <div class="time" style="grid-row:4">11:00</div>
+            <div class="time" style="grid-row:5">12:00</div>
+            <div class="time" style="grid-row:6">13:00</div>
+            <div class="time" style="grid-row:7">14:00</div>
+            <div class="time" style="grid-row:8">15:00</div>
+            <div class="time" style="grid-row:9">16:00</div>
+            <div class="time" style="grid-row:10">17:00</div>
+            <div class="time" style="grid-row:11">18:00</div>
+            <div class="time" style="grid-row:12">19:00</div>
+            <div class="time" style="grid-row:13">20:00</div>
+            <div class="filler-col"></div>
+            <div class="col" style="grid-column:3"></div>
+            <div class="col" style="grid-column:4"></div>
+            <div class="col" style="grid-column:5"></div>
+            <div class="col" style="grid-column:6"></div>
+            <div class="col" style="grid-column:7"></div>
+            <div class="col weekend" style="grid-column:8"></div>
+            <div class="col weekend" style="grid-column:9"></div>
+            <div class="row" style="grid-row:1"></div>
+            <div class="row" style="grid-row:2"></div>
+            <div class="row" style="grid-row:3"></div>
+            <div class="row" style="grid-row:4"></div>
+            <div class="row" style="grid-row:5"></div>
+            <div class="row" style="grid-row:6"></div>
+            <div class="row" style="grid-row:7"></div>
+            <div class="row" style="grid-row:8"></div>
+            <div class="row" style="grid-row:9"></div>
+            <div class="row" style="grid-row:10"></div>
+            <div class="row" style="grid-row:11"></div>
+            <div class="row" style="grid-row:12"></div>
+            <div class="row" style="grid-row:13"></div>
+            <div class="row" style="grid-row:14"></div>
+            <!-- <div class="event event1 calendar1">Event 1</div>
+            <div class="event event2 calendar2">Event 2</div>
+            <div class="event event3 calendar2">Event 3</div> -->
+            <div class="current-time" id="current-time">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    (async () => {
+        let basicButton = await Component.build("../../assets/components/basic-button.html");
+
+        let buttonStrings = ['', 'Cancel'];
+        basicButton.generateNode(buttonStrings, 'cancel', 'no-img');
+        basicButton.append('cancel', 'overlay-content');
+
+        document.getElementById('cancel').onclick = () => {
+            document.getElementById('overlay').classList.remove('visible')
+            document.getElementById('keys-container').innerHTML = ''
+        }
+        // buttonStrings = ['', 'Student 3'];
+        // basicButton.generateNode(buttonStrings, 'student-3', 'white.no-img');
+        // basicButton.append('student-3', 'button-container');
+
+        let params = {};
+        window.location.search.slice(1).split('&').forEach(elm => {
+            if (elm === '') return;
+            let spl = elm.split('=');
+            const d = decodeURIComponent;
+            params[d(spl[0])] = (spl.length >= 2 ? d(spl[1]) : true);
+        });
+        if (params['wm'] == undefined) params['wm'] = 1;
+
+        document.getElementById('wm-1').onclick = () => {
+            document.location.href = `http://localhost:8000/view/receptionist/?wm=1`
+        }
+        document.getElementById('wm-2').onclick = () => {
+            document.location.href = `http://localhost:8000/view/receptionist/?wm=2`
+        }
+        document.getElementById('wm-3').onclick = () => {
+            document.location.href = `http://localhost:8000/view/receptionist/?wm=3`
+        }
+
+
+
+        // document.getElementById('back').onclick = () => {
+        //     document.location.href = 'http://localhost:8000/view/student/index.html?student_id=' + params['student_id']
+        // }
+        Date.prototype.addHours = function (h) {
+            this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+            return this;
+        }
+        Date.prototype.substractHours = function (h) {
+            this.setTime(this.getTime() - (h * 60 * 60 * 1000));
+            return this;
+        }
+
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        let d = new Date();
+
+        document.getElementById('title').innerHTML = monthNames[d.getMonth()] + ' ' + d.getFullYear();
+        for (let j = 1; j <= 5; j++) {
+            document.getElementById('day-' + j).innerHTML
+                = d.getDate() + ' ' + dayNames[d.getDay()];
+            d.addHours(24)
+        }
+
+        d = new Date();
+
+        fetch("http://localhost:8080/reservation/wm/" + params['wm'], { mode: "cors" })
+            .then(response => {
+                // indicates whether the response is successful (status code 200-299) or not
+                if (!response.ok) {
+                    throw new Error(`Request failed with status ${response.status}`)
+                }
+                return response.json()
+            }).then(data => {
+                data.forEach(element => {
+                    console.log(element)
+                    let recievedTime = new Date(element.startTime)
+                    let columnNumber = -1
+                    for (let j = 1; j <= 5; j++) {
+                        if (document.getElementById('day-' + j).innerHTML.split(' ')[0] ==
+                            recievedTime.getDate()) columnNumber = j
+                        console.log(document.getElementById('day-' + j).innerHTML)
+                    }
+                    if (columnNumber < 0) return
+                    let event = document.createElement('div')
+                    event.setAttribute('class', 'event calendar2')
+                    fetch('http://localhost:8080/student/' + element.student_id, { mode: "cors" })
+                        .then(response => response.json())
+                        .then(data => {
+                            event.innerHTML = data.firstName + ' ' + data.lastName
+                        })
+                    // event.innerHTML = 'Your time.'
+
+                    // console.log(params['student_id'], event.student_id)
+                    event.setAttribute('data', element.id + ' ' + element.student_id)//element.student_id)
+                    event.style.gridRow = recievedTime.getHours() - 6
+                    event.style.gridColumn = columnNumber + 2
+
+                    event.onclick = function () {
+                        document.getElementById('overlay').classList.add('visible')
+                        let studentId = this.getAttribute('data').split(' ')[1]
+                        console.log(studentId)
+                        fetch('http://localhost:8080/key/wm/' + params['wm'])
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data)
+                                data.forEach(key => {
+                                    let buttonStrings = ['', 'Key ' + key.id];
+                                    basicButton.generateNode(buttonStrings, 'key-' + key.id, 'white.no-img');
+                                    basicButton.append('key-' + key.id, 'keys-container');
+                                    document.getElementById('key-' + key.id).setAttribute('data', key.id + ' ' + studentId)
+                                    document.getElementById('key-' + key.id).onclick = function () {
+                                        let keyData = this.getAttribute('data').split(' ')
+                                        fetch('http://localhost:8080/key/add/' + keyData[1] + '/' + keyData[0], {
+                                            mode: 'cors',
+                                            method: 'PUT',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: '{}'
+                                        }).then(() => {
+                                            location.reload()
+                                        })
+
+                                    }
+
+                                })
+                            })
+                    }
+
+                    fetch('http://localhost:8080/key/student/' + element.student_id, { mode: "cors" })
+                        .then(response => response.json()).then(data => {
+                            if (data != '') {
+                                console.log(data)
+                                event.setAttribute('data', data.id)
+                                event.classList.remove('calendar2')
+                                event.classList.add('calendar1')
+                                event.onclick = function () {
+                                    if(window.confirm('Return key for this reservation?')) {
+                                        let keyData = this.getAttribute('data')
+                                        console.log(keyData)
+                                        fetch('http://localhost:8080/key/remove/' + keyData, { method: 'PUT' }).then(() => {
+                                            location.reload()
+                                        })
+
+                                    }
+
+                                }
+                            }
+                        }).catch(error => console.log(error))
+
+                    document.getElementById('calendar-content').appendChild(event)
+                })
+
+
+            })
+
+        let r = document.querySelector(':root')
+        r.style.setProperty('--timeline-position', (d.getMinutes() / 60 * 100) + '%');
+        r.style.setProperty('--timeline-row', d.getHours() - 6);
+
+        console.log((d.getMinutes() / 60 * 100) + '%')
+        if (d.getHours() < 7 || d.getHours() > 19) {
+            document.getElementById('current-time').style.display = 'none';
+        }
+
+    })()
+
+</script>
+
+</html>

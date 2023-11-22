@@ -1,0 +1,9 @@
+cz.cvut.fit.si1.server
+cz.cvut.fit.si1.server.business.dto
+cz.cvut.fit.si1.server.business.service
+cz.cvut.fit.si1.server.business.service.baseservice
+cz.cvut.fit.si1.server.business.service.serviceimpl
+cz.cvut.fit.si1.server.data.entity
+cz.cvut.fit.si1.server.data.repository.entityrepostory
+cz.cvut.fit.si1.server.presentation.controller
+cz.cvut.fit.si1.server.util
